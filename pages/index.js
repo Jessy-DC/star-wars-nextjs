@@ -1,16 +1,16 @@
-import Head from 'next/head'
+
 import styles from '../styles/Home.module.css'
 import {getMovies} from "../api/movies";
+import Link from 'next/link'
+import {Footer} from "../components/Footer";
+import {Header} from "../components/Head"
 
 export default function Home({data}) {
   const movies = data.results;
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Star Wars Universe</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Header />
 
       <main className={styles.main}>
         <h1 className={styles.title}>
@@ -19,25 +19,18 @@ export default function Home({data}) {
 
         <div className={styles.grid}>
             { movies && movies.map((movie, index) => (
-                <a key={movie.episode_id} href="https://nextjs.org/learn" className={styles.card}>
-                    <h3>{movie.title} &rarr;</h3>
-                    <p className={styles.description}>{movie.opening_crawl.substr(0,300)}...</p>
-                </a>
+                <Link href={`/movies/${movie.episode_id}`} key={movie.episode_id}>
+                    <a  className={styles.card}>
+                        <h3>{movie.title} &rarr;</h3>
+                        <p className={styles.description}>{movie.opening_crawl.substr(0,300)}...</p>
+                    </a>
+                </Link>
             ))}
         </div>
 
       </main>
+        <Footer />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
