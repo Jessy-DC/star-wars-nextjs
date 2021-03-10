@@ -3,6 +3,7 @@ import {getCharacter} from "../../api/characters";
 import {getAllMoviesID, getMovieData} from "../../api/movies";
 import {Footer} from "../../components/Footer";
 import {Header} from "../../components/Head"
+import Link from 'next/link'
 
 export default function GetCharacters({characters, movieData}) {
     return (
@@ -18,11 +19,13 @@ export default function GetCharacters({characters, movieData}) {
                     { characters && characters.map((character, index) => (
                         <a key={character.url} href="https://nextjs.org/learn" className={styles.card}>
                             <h3>{character.name} &rarr;</h3>
-                            <p className={styles.description}>{character.birth_year}</p>
+                            <p className={styles.description}>Date of birth {character.birth_year}</p>
                         </a>
                     ))}
                 </div>
-
+                <Link href="/">
+                    <a>Back to home</a>
+                </Link>
             </main>
 
         <Footer />
@@ -41,13 +44,20 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     // Fetch necessary data for the blog post using params.id
-    const movieData = await getMovieData(params.id)
+    let moviesID = [4, 5, 6, 1, 2, 3]
+    let movieId = moviesID[params.id - 1]
+
+    const movieData = await getMovieData(movieId)
     const charactersEndpoint = movieData.characters
     let characters = []
 
-    for (let endpoint of charactersEndpoint) {
-        let character = await getCharacter(endpoint)
+    for (let i = 0; i < charactersEndpoint.length; i++) {
+        let character = await getCharacter(charactersEndpoint[i])
         characters.push(character)
+
+        if(i === 10) {
+            break;
+        }
     }
 
     return {
