@@ -1,5 +1,5 @@
 
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Main.module.css'
 import {getMovies} from "../api/movies";
 import Link from 'next/link'
 import {Footer} from "../components/Footer";
@@ -20,7 +20,7 @@ export default function Home({data}) {
         <div className={styles.grid}>
             { movies && movies.map((movie, index) => (
                 <Link href={`/movies/${movie.episode_id}`} key={movie.episode_id}>
-                    <a  className={styles.card}>
+                    <a  className={[styles.card, styles.cardMovies].join(' ')}>
                         <h3>{movie.title} &rarr;</h3>
                         <p className={styles.description}>{movie.opening_crawl.substr(0,300)}...</p>
                     </a>

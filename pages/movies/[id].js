@@ -1,4 +1,4 @@
-import styles from '../../styles/Characters.module.css'
+import styles from '../../styles/Main.module.css'
 import {getCharacter} from "../../api/characters";
 import {getAllMoviesID, getMovieData} from "../../api/movies";
 import {Footer} from "../../components/Footer";
@@ -17,7 +17,7 @@ export default function GetCharacters({characters, movieData}) {
 
                 <div className={styles.grid}>
                     { characters && characters.map((character, index) => (
-                        <a key={character.url} href="https://nextjs.org/learn" className={styles.card}>
+                        <a key={character.url} href="https://nextjs.org/learn" className={[styles.card, styles.cardCharacters].join(' ')}>
                             <h3>{character.name} &rarr;</h3>
                             <p className={styles.description}>Date of birth {character.birth_year}</p>
                         </a>
